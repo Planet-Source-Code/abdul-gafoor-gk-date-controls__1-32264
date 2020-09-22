@@ -1,0 +1,312 @@
+VERSION 5.00
+Begin VB.PropertyPage dpGeneral 
+   Caption         =   "General"
+   ClientHeight    =   3495
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   5925
+   LockControls    =   -1  'True
+   PaletteMode     =   0  'Halftone
+   ScaleHeight     =   3495
+   ScaleWidth      =   5925
+   Begin VB.ComboBox cmb 
+      Height          =   315
+      Index           =   1
+      ItemData        =   "dpGeneral.pgx":0000
+      Left            =   105
+      List            =   "dpGeneral.pgx":0016
+      Style           =   2  'Dropdown List
+      TabIndex        =   18
+      Top             =   2910
+      Width           =   2715
+   End
+   Begin VB.TextBox txt 
+      Alignment       =   2  'Center
+      Height          =   315
+      Index           =   2
+      Left            =   3960
+      TabIndex        =   15
+      Top             =   570
+      Width           =   315
+   End
+   Begin VB.ComboBox cmb 
+      Height          =   315
+      Index           =   0
+      ItemData        =   "dpGeneral.pgx":0062
+      Left            =   900
+      List            =   "dpGeneral.pgx":006F
+      Style           =   2  'Dropdown List
+      TabIndex        =   13
+      Top             =   1485
+      Width           =   1935
+   End
+   Begin DateControls.gkDatePicker dp 
+      Height          =   330
+      Index           =   2
+      Left            =   900
+      TabIndex        =   11
+      Top             =   1020
+      Width           =   1935
+      _ExtentX        =   3413
+      _ExtentY        =   582
+      Locked          =   -1  'True
+      Value           =   ""
+   End
+   Begin DateControls.gkDatePicker dp 
+      Height          =   315
+      Index           =   1
+      Left            =   900
+      TabIndex        =   10
+      Top             =   570
+      Width           =   1935
+      _ExtentX        =   3413
+      _ExtentY        =   556
+      AllowNull       =   0   'False
+   End
+   Begin DateControls.gkDatePicker dp 
+      Height          =   315
+      Index           =   0
+      Left            =   900
+      TabIndex        =   9
+      Top             =   120
+      Width           =   1935
+      _ExtentX        =   3413
+      _ExtentY        =   556
+      AllowNull       =   0   'False
+   End
+   Begin VB.TextBox txt 
+      Alignment       =   2  'Center
+      Height          =   315
+      Index           =   1
+      Left            =   3960
+      TabIndex        =   8
+      Top             =   120
+      Width           =   315
+   End
+   Begin VB.CheckBox chk 
+      Caption         =   "Allow Null Value"
+      Height          =   270
+      Index           =   0
+      Left            =   3960
+      TabIndex        =   5
+      Top             =   1050
+      Width           =   1545
+   End
+   Begin VB.TextBox txt 
+      Height          =   315
+      Index           =   0
+      Left            =   90
+      TabIndex        =   4
+      Top             =   2205
+      Width           =   2700
+   End
+   Begin VB.Label lbl 
+      BorderStyle     =   1  'Fixed Single
+      Height          =   315
+      Index           =   9
+      Left            =   4305
+      TabIndex        =   17
+      Top             =   570
+      Width           =   1500
+   End
+   Begin VB.Label lbl 
+      BorderStyle     =   1  'Fixed Single
+      Height          =   315
+      Index           =   8
+      Left            =   4305
+      TabIndex        =   16
+      Top             =   120
+      Width           =   1500
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "Format When Being Edited:"
+      Height          =   195
+      Index           =   7
+      Left            =   105
+      TabIndex        =   14
+      Top             =   2655
+      Width           =   1950
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "Format:"
+      Height          =   195
+      Index           =   6
+      Left            =   105
+      TabIndex        =   12
+      Top             =   1530
+      Width           =   525
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "PlaceHolder:"
+      Height          =   195
+      Index           =   4
+      Left            =   3000
+      TabIndex        =   7
+      Top             =   615
+      Width           =   915
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "Seperator:"
+      Height          =   195
+      Index           =   3
+      Left            =   3000
+      TabIndex        =   6
+      Top             =   165
+      Width           =   735
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "Custom Format:"
+      Height          =   195
+      Index           =   5
+      Left            =   90
+      TabIndex        =   3
+      Top             =   1950
+      Width           =   1095
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "Value:"
+      Height          =   195
+      Index           =   2
+      Left            =   105
+      TabIndex        =   2
+      Top             =   1080
+      Width           =   450
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "MinDate:"
+      Height          =   195
+      Index           =   1
+      Left            =   105
+      TabIndex        =   1
+      Top             =   165
+      Width           =   645
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "MaxDate:"
+      Height          =   195
+      Index           =   0
+      Left            =   90
+      TabIndex        =   0
+      Top             =   615
+      Width           =   690
+   End
+End
+Attribute VB_Name = "dpGeneral"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+'// Constants for Date Picker Boxes
+Private Const DP_MinDate = 0
+Private Const DP_MaxDate = 1
+Private Const DP_Value = 2
+'// Constants for Text Boxes
+Private Const TXT_CustomFormat = 0
+Private Const TXT_Seperator = 1
+Private Const TXT_PlaceHolder = 2
+'// Constants for check boxes
+Private Const CHK_AllowNull = 0
+'// Constants for Labels
+Private Const LBL_SeperatorSamples = 8
+Private Const LBL_PlaceHolderSamples = 9
+'// Constants for Combo Boxes
+Private Const CMB_Format = 0
+Private Const CMB_FormatWhenEdit = 1
+
+Private Sub chk_Click(Index As Integer)
+    Changed = True
+End Sub
+
+Private Sub txt_Change(Index As Integer)
+    Changed = True
+End Sub
+
+Private Sub dp_Change(Index As Integer)
+    Changed = True
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+    With SelectedControls(0)
+        .MinDate = dp(DP_MinDate).Value
+        .MaxDate = dp(DP_MaxDate).Value
+        .Value = dp(DP_Value).Value
+        .Format = GetComboItemData(CMB_Format)
+        .CustomFormat = txt(TXT_CustomFormat).Text
+        .FormatWhenEdit = GetComboItemData(CMB_FormatWhenEdit)
+        .Seperator = txt(TXT_Seperator).Text
+        .PlaceHolder = txt(TXT_PlaceHolder).Text
+        .AllowNull = (chk(CHK_AllowNull).Value = vbChecked)
+    End With
+End Sub
+
+Private Sub PropertyPage_SelectionChanged()
+    '// Fill all combos first
+    Call FillCombo(CMB_Format)
+    Call FillCombo(CMB_FormatWhenEdit)
+    
+    With SelectedControls(0)
+        dp(DP_MinDate).Value = .MinDate
+        dp(DP_MaxDate).Value = .MaxDate
+        dp(DP_Value).Value = .Value
+        cmb(CMB_Format).ListIndex = _
+                GetIndexFromItemData(CMB_Format, .Format)
+        txt(TXT_CustomFormat).Text = .CustomFormat
+        cmb(CMB_FormatWhenEdit).ListIndex = _
+                GetIndexFromItemData(CMB_FormatWhenEdit, .FormatWhenEdit)
+        txt(TXT_Seperator).Text = .Seperator
+        lbl(LBL_SeperatorSamples).Caption = "'/', '-', '\', ':'"
+        txt(TXT_PlaceHolder).Text = .PlaceHolder
+        lbl(LBL_PlaceHolderSamples).Caption = "'_', '#'"
+        chk(CHK_AllowNull).Value = (.AllowNull And vbChecked)
+    End With
+End Sub
+
+Private Sub FillCombo(Index As Integer)
+    With cmb(Index)
+        Select Case Index
+            Case CMB_Format
+                .Clear      '// Clear all contents first
+                .AddItem "Long Date": .ItemData(.NewIndex) = dtFormatConstants.dtLongDate
+                .AddItem "Short Date": .ItemData(.NewIndex) = dtFormatConstants.dtShortDate
+                .AddItem "Custom": .ItemData(.NewIndex) = dtFormatConstants.dtCustom
+            Case CMB_FormatWhenEdit
+                .Clear      '// Clear all contents first
+                .AddItem "dd/mm/yyyy": .ItemData(.NewIndex) = dtFormatWhenEditConstants.[dd/mm/yyyy]
+                .AddItem "mm/dd/yyyy": .ItemData(.NewIndex) = dtFormatWhenEditConstants.[mm/dd/yyyy]
+                .AddItem "dd/yyyy/mm": .ItemData(.NewIndex) = dtFormatWhenEditConstants.[dd/yyyy/mm]
+                .AddItem "mm/yyyy/dd": .ItemData(.NewIndex) = dtFormatWhenEditConstants.[mm/yyyy/dd]
+                .AddItem "yyyy/dd/mm": .ItemData(.NewIndex) = dtFormatWhenEditConstants.[yyyy/dd/mm]
+                .AddItem "yyyy/mm/dd": .ItemData(.NewIndex) = dtFormatWhenEditConstants.[yyyy/mm/dd]
+        End Select
+    End With
+End Sub
+
+Private Function GetIndexFromItemData(Index As Integer, lngItemData As Long) As Long
+    Dim i As Integer
+    
+    '// Set default value
+    GetIndexFromItemData = (-1)
+    '// Loop through all items and find out index
+    With cmb(Index)
+        For i = 0 To .ListCount - 1
+            If (.ItemData(i) = lngItemData) Then
+                GetIndexFromItemData = i
+                Exit For
+            End If
+        Next i
+    End With
+End Function
+
+Private Function GetComboItemData(Index As Integer)
+    GetComboItemData = cmb(Index).ItemData(cmb(Index).ListIndex)
+End Function
