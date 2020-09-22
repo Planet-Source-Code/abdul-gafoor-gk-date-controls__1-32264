@@ -1,0 +1,237 @@
+VERSION 5.00
+Begin VB.PropertyPage calAppearance 
+   Caption         =   "Appearance"
+   ClientHeight    =   3075
+   ClientLeft      =   0
+   ClientTop       =   0
+   ClientWidth     =   5910
+   LockControls    =   -1  'True
+   PaletteMode     =   0  'Halftone
+   ScaleHeight     =   3075
+   ScaleWidth      =   5910
+   Begin DateControls.gkMonth clndr 
+      Height          =   2835
+      Left            =   2610
+      TabIndex        =   9
+      Top             =   105
+      Width           =   3225
+      _ExtentX        =   5689
+      _ExtentY        =   5001
+      BeginProperty DayHeaderFont {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Tahoma"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Enabled         =   0   'False
+      TitleFontSize   =   8.25
+      DayHeaderFontSize=   8.25
+      CurrentMonthFontSize=   8.25
+      PreMonthFontSize=   8.25
+      PostMonthFontSize=   8.25
+      ActiveDayFontSize=   8.25
+      ActiveDayFontItalic=   0   'False
+   End
+   Begin VB.ComboBox cmb 
+      Height          =   315
+      Index           =   1
+      ItemData        =   "calAppearance.pgx":0000
+      Left            =   90
+      List            =   "calAppearance.pgx":000D
+      Style           =   2  'Dropdown List
+      TabIndex        =   8
+      Top             =   1275
+      Width           =   2430
+   End
+   Begin VB.ComboBox cmb 
+      Height          =   315
+      Index           =   0
+      ItemData        =   "calAppearance.pgx":0033
+      Left            =   90
+      List            =   "calAppearance.pgx":004C
+      Style           =   2  'Dropdown List
+      TabIndex        =   6
+      Top             =   675
+      Width           =   2430
+   End
+   Begin VB.TextBox txtDateTipFormat 
+      Height          =   330
+      Left            =   90
+      TabIndex        =   4
+      Top             =   2190
+      Width           =   2400
+   End
+   Begin VB.CheckBox chk 
+      Caption         =   "ShowToolTip"
+      Height          =   285
+      Index           =   1
+      Left            =   90
+      TabIndex        =   2
+      Top             =   1680
+      Width           =   1335
+   End
+   Begin VB.CheckBox chk 
+      Caption         =   "ShowLines"
+      Height          =   285
+      Index           =   2
+      Left            =   105
+      TabIndex        =   1
+      Top             =   2625
+      Width           =   1170
+   End
+   Begin VB.CheckBox chk 
+      Caption         =   "ShowDayHeader"
+      Height          =   285
+      Index           =   0
+      Left            =   90
+      TabIndex        =   0
+      Top             =   120
+      Width           =   1530
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "Day Header Format:"
+      Height          =   195
+      Index           =   2
+      Left            =   105
+      TabIndex        =   5
+      Top             =   1050
+      Width           =   1425
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "First Day Of Week:"
+      Height          =   195
+      Index           =   1
+      Left            =   105
+      TabIndex        =   7
+      Top             =   450
+      Width           =   1350
+   End
+   Begin VB.Label lbl 
+      AutoSize        =   -1  'True
+      Caption         =   "DateTipFormat:"
+      Height          =   195
+      Index           =   0
+      Left            =   90
+      TabIndex        =   3
+      Top             =   1965
+      Width           =   1095
+   End
+End
+Attribute VB_Name = "calAppearance"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = True
+Attribute VB_PredeclaredId = False
+Attribute VB_Exposed = True
+Option Explicit
+
+'// Constants for combo boxes
+Private Const CMB_FirstDayOfWeek = 0
+Private Const CMB_DayHeaderFormat = 1
+'// Constants for check boxes
+Private Const CHK_ShowDayHeader = 0
+Private Const CHK_ShowToolTip = 1
+Private Const CHK_ShowLines = 2
+
+Private Sub cmb_Click(Index As Integer)
+    Changed = True
+    Select Case Index
+        Case CMB_FirstDayOfWeek
+            clndr.FirstDayOfWeek = cmb(Index).ItemData(cmb(Index).ListIndex)
+        Case CMB_DayHeaderFormat
+            clndr.DayHeaderFormat = cmb(Index).ItemData(cmb(Index).ListIndex)
+    End Select
+End Sub
+
+Private Sub txtDateTipFormat_Change()
+    Changed = True
+    clndr.DateTipFormat = txtDateTipFormat.Text
+End Sub
+
+Private Sub chk_Click(Index As Integer)
+    Dim blnStatus As Boolean
+    
+    '// Set changed property to true for all check boxes
+    Changed = True
+    '// Get current check box status, whether checked or not
+    blnStatus = (chk(Index).Value And vbChecked)
+    '// Change calendar properties
+    Select Case Index
+        Case CHK_ShowDayHeader: clndr.ShowDayHeader = blnStatus
+        Case CHK_ShowToolTip: clndr.ShowToolTip = blnStatus
+        Case CHK_ShowLines: clndr.ShowLines = blnStatus
+    End Select
+End Sub
+
+Private Sub PropertyPage_ApplyChanges()
+    With SelectedControls(0)
+        .ShowDayHeader = (chk(CHK_ShowDayHeader).Value = vbChecked)
+        .FirstDayOfWeek = GetComboItemData(CMB_FirstDayOfWeek)
+        .DayHeaderFormat = GetComboItemData(CMB_DayHeaderFormat)
+        .ShowToolTip = (chk(CHK_ShowToolTip).Value = vbChecked)
+        .DateTipFormat = txtDateTipFormat.Text
+        .ShowLines = (chk(CHK_ShowLines).Value = vbChecked)
+    End With
+End Sub
+
+Private Sub PropertyPage_SelectionChanged()
+    Call FillCombo(CMB_FirstDayOfWeek)
+    Call FillCombo(CMB_DayHeaderFormat)
+    
+    With SelectedControls(0)
+        chk(CHK_ShowDayHeader).Value = (.ShowDayHeader And vbChecked)
+        cmb(CMB_FirstDayOfWeek).ListIndex = _
+                GetIndexFromItemData(CMB_FirstDayOfWeek, .FirstDayOfWeek)
+        cmb(CMB_DayHeaderFormat).ListIndex = _
+                GetIndexFromItemData(CMB_DayHeaderFormat, .DayHeaderFormat)
+        chk(CHK_ShowToolTip).Value = (.ShowToolTip And vbChecked)
+        txtDateTipFormat.Text = .DateTipFormat
+        chk(CHK_ShowLines).Value = (.ShowLines And vbChecked)
+    End With
+    
+    Changed = False
+End Sub
+
+Private Sub FillCombo(Index As Integer)
+    Dim i As Integer
+    
+    With cmb(Index)
+        Select Case Index
+            Case CMB_FirstDayOfWeek
+                .Clear      '// Clear all contents first
+                For i = vbSunday To vbSaturday
+                    .AddItem VBA.WeekdayName(i, , vbSunday)
+                    .ItemData(.NewIndex) = i
+                Next i
+            Case CMB_DayHeaderFormat
+                .Clear      '// Clear all contents first
+                .AddItem "Single Letter": .ItemData(.NewIndex) = dtDayHeaderFormats.dtSingleLetter
+                .AddItem "Medium": .ItemData(.NewIndex) = dtDayHeaderFormats.dtMedium
+                .AddItem "Full Name": .ItemData(.NewIndex) = dtDayHeaderFormats.dtFullName
+        End Select
+    End With
+End Sub
+
+Private Function GetIndexFromItemData(Index As Integer, lngItemData As Long) As Long
+    Dim i As Integer
+    
+    '// Set default value
+    GetIndexFromItemData = (-1)
+    '// Loop through all items and find out index
+    With cmb(Index)
+        For i = 0 To .ListCount - 1
+            If (.ItemData(i) = lngItemData) Then
+                GetIndexFromItemData = i
+                Exit For
+            End If
+        Next i
+    End With
+End Function
+
+Private Function GetComboItemData(Index As Integer)
+    GetComboItemData = cmb(Index).ItemData(cmb(Index).ListIndex)
+End Function
